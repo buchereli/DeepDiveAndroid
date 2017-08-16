@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="com.buchereli.deepdiveandroid.PassPlayActivity">
+
+    <HorizontalScrollView
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_above="@+id/linearLayout"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/table"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/player0"
+            android:name="com.buchereli.deepdiveandroid.PlayerTab"
+            class="com.buchereli.deepdiveandroid.PlayerTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:context="com.buchereli.deepdiveandroid.PassPlayActivity"
+            tools:layout="@layout/fragment_player_tab" />
+
+        <fragment
+            android:id="@+id/player1"
+            android:name="com.buchereli.deepdiveandroid.PlayerTab"
+            class="com.buchereli.deepdiveandroid.PlayerTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:context="com.buchereli.deepdiveandroid.PassPlayActivity"
+            tools:layout="@layout/fragment_player_tab" />
+
+        <fragment
+            android:id="@+id/player2"
+            android:name="com.buchereli.deepdiveandroid.PlayerTab"
+            class="com.buchereli.deepdiveandroid.PlayerTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:context="com.buchereli.deepdiveandroid.PassPlayActivity"
+            tools:layout="@layout/fragment_player_tab" />
+
+        <fragment
+            android:id="@+id/player3"
+            android:name="com.buchereli.deepdiveandroid.PlayerTab"
+            class="com.buchereli.deepdiveandroid.PlayerTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:context="com.buchereli.deepdiveandroid.PassPlayActivity"
+            tools:layout="@layout/fragment_player_tab" />
+
+        <fragment
+            android:id="@+id/player4"
+            android:name="com.buchereli.deepdiveandroid.PlayerTab"
+            class="com.buchereli.deepdiveandroid.PlayerTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:context="com.buchereli.deepdiveandroid.PassPlayActivity"
+            tools:layout="@layout/fragment_player_tab" />
+
+        <fragment
+            android:id="@+id/player5"
+            android:name="com.buchereli.deepdiveandroid.PlayerTab"
+            class="com.buchereli.deepdiveandroid.PlayerTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:context="com.buchereli.deepdiveandroid.PassPlayActivity"
+            tools:layout="@layout/fragment_player_tab" />
+
+        <fragment
+            android:id="@+id/player6"
+            android:name="com.buchereli.deepdiveandroid.PlayerTab"
+            class="com.buchereli.deepdiveandroid.PlayerTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:context="com.buchereli.deepdiveandroid.PassPlayActivity"
+            tools:layout="@layout/fragment_player_tab" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/stayButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.50"
+            android:background="@android:color/holo_orange_dark"
+            android:text="@string/stay"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/leaveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="0.50"
+            android:background="@android:color/holo_orange_dark"
+            android:text="@string/leave"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

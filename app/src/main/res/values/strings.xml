@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DeepDiveAndroid</string>
+    <string name="single_player">Single Player</string>
+    <string name="pass_play"><![CDATA[Pass & Play]]></string>
+    <string name="multiplayer">Multiplayer</string>
+    <string name="stay">STAY</string>
+    <string name="leave">LEAVE</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
