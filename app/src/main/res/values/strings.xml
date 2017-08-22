@@ -8,5 +8,6 @@
     <string name="player_name">player name</string>
     <string name="continue_button">Continue</string>
     <string name="pass_device">PASS THE DEVICE TO</string>
+    <string name="player_icon">player icon</string>
 
 </resources>

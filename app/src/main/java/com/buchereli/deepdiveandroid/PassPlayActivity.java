@@ -8,11 +8,12 @@ import com.buchereli.deepdiveandroid.util.Game;
 import com.buchereli.deepdiveandroid.util.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PassPlayActivity extends FragmentActivity {
 
+    private final HashMap<String, PlayerTab> playerTabs = new HashMap<>();
     private Game game;
-    private View layout;
     private TurnPopup turnPopup;
 
     @Override
@@ -26,30 +27,39 @@ public class PassPlayActivity extends FragmentActivity {
         players.add(new Player("Tom"));
 
         game = new Game(getAssets(), players);
-        layout = findViewById(R.id.layout);
+
+        for (int i = 0; i < players.size(); i++) {
+            String player = players.get(i).toString();
+            PlayerTab playerTab = PlayerTab.newInstance(player);
+            playerTabs.put(player, playerTab);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.players,
+                            playerTab, "PLAYER TAB FRAGMENT " + i)
+                    .disallowAddToBackStack()
+                    .commit();
+        }
     }
 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.stayButton:
                 game.stay();
-                displayTurnPopup(layout);
+                displayTurnPopup();
+                updatePlayerTab();
                 break;
             case R.id.leaveButton:
                 game.leave();
-                displayTurnPopup(layout);
+                displayTurnPopup();
+                updatePlayerTab();
                 break;
             case R.id.continueButton:
                 turnPopup.remove();
                 break;
         }
-
-//        someFragment.myClickMethod(v);
     }
 
-    public void displayTurnPopup(View view) {
-        System.out.println("displaying turn popup onClick");
-
+    public void displayTurnPopup() {
         turnPopup = TurnPopup.newInstance(game.turn());
 
         getSupportFragmentManager()
@@ -58,29 +68,12 @@ public class PassPlayActivity extends FragmentActivity {
                         turnPopup, "TURN POPUP FRAGMENT")
                 .disallowAddToBackStack()
                 .commit();
+    }
 
+    public void updatePlayerTab() {
+        for (PlayerTab playerTab : playerTabs.values())
+            playerTab.removeBorder();
 
-//        View popupView = getLayoutInflater().inflate(R.layout.fragment_turn_popup, this);
-//
-//        PopupWindow popupWindow = new PopupWindow(popupView,
-//                ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
-//
-//        // Example: If you have a TextView inside `popup_layout.xml`
-//        TextView tv = (TextView) popupView.findViewById(R.id.playerName);
-//
-//        String name = "ELI";
-//
-//        tv.setText(name);
-//
-//        // If the PopupWindow should be focusable
-//        popupWindow.setFocusable(true);
-//
-//        // If you need the PopupWindow to dismiss when when touched outside
-//        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.CYAN));
-//
-//        // Using location, the PopupWindow will be displayed right under anchorView
-//        popupWindow.showAtLocation(view, Gravity.NO_GRAVITY,
-//                0, 0);
-
+        playerTabs.get(game.turn()).addBorder();
     }
 }
