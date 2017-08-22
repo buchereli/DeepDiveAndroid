@@ -27,7 +27,7 @@ public class Game {
         choices = new Choices(table);
     }
 
-    public void update() {
+    private void update() {
         while (choices.complete()) {
             if (!table.activeRound()) {
                 table.reset(deck, players);
@@ -54,13 +54,19 @@ public class Game {
 
     public void stay() {
         choices.stay(true);
+        update();
     }
 
     public void leave() {
         choices.stay(false);
+        update();
     }
 
     public String state() {
         return "It is currently " + choices.currentPlayer() + " turn";
+    }
+
+    public String turn() {
+        return choices.currentPlayer().toString();
     }
 }

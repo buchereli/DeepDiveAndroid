@@ -46,8 +46,9 @@ class Table {
     void add(Card addCard) {
         if (addCard.type() == Card.CardType.HAZARD) {
             for (Card card : cards)
-                if (card.id().equals(addCard.id()))
-                    activeRound = false;
+                if (card.type() == Card.CardType.HAZARD)
+                    if (card.id().equals(addCard.id()))
+                        activeRound = false;
         } else if (addCard.type() == Card.CardType.GEM) {
             if (players.size() != 0) {
                 playerGems += Integer.parseInt(addCard.id()) / players.size();
