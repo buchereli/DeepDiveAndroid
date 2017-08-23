@@ -10,4 +10,8 @@
     <string name="pass_device">PASS THE DEVICE TO</string>
     <string name="player_icon">player icon</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="card_icon">card icon</string>
+
 </resources>

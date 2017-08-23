@@ -62,6 +62,10 @@ public class Game {
         update();
     }
 
+    public ArrayList<Card> table() {
+        return table.getCards();
+    }
+
     public String state() {
         return "It is currently " + choices.currentPlayer() + " turn";
     }

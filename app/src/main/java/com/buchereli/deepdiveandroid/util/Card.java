@@ -4,10 +4,11 @@ package com.buchereli.deepdiveandroid.util;
  * Created by buche on 8/15/2017.
  */
 
-class Card {
+public class Card {
 
     private CardType type;
     private String id;
+
     Card(String type, String id) {
         switch (type) {
             case "gem":
@@ -27,7 +28,7 @@ class Card {
         this.id = id;
     }
 
-    CardType type() {
+    public CardType type() {
         return type;
     }
 
@@ -40,6 +41,6 @@ class Card {
         return type + " - " + id;
     }
 
-    enum CardType {GEM, HAZARD, ARTIFACT}
+    public enum CardType {GEM, HAZARD, ARTIFACT}
 
 }

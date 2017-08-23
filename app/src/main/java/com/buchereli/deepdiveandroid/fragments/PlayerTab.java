@@ -1,4 +1,4 @@
-package com.buchereli.deepdiveandroid;
+package com.buchereli.deepdiveandroid.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.buchereli.deepdiveandroid.R;
 
 /**
  * A simple {@link Fragment} subclass.

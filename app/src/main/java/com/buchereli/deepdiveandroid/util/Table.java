@@ -78,4 +78,8 @@ class Table {
 
         return "TABLE: " + table + " TABLE GEMS - " + tableGems;
     }
+
+    ArrayList<Card> getCards() {
+        return cards;
+    }
 }
