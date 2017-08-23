@@ -1,30 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout"
-    android:layout_width="match_parent"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     tools:context="com.buchereli.deepdiveandroid.fragments.PlayerTab">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/player_icon"
-        android:src="@mipmap/ic_launcher" />
+        android:background="@android:color/white"
+        android:orientation="horizontal">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/playerName"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="5dp"
-            android:text="@string/player_name" />
+            android:contentDescription="@string/player_icon"
+            android:src="@mipmap/ic_launcher" />
 
-    </RelativeLayout>
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/playerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="5dp"
+                android:text="@string/player_name" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/linearLayout" />
+
+</RelativeLayout>

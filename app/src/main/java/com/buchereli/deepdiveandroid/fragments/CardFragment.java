@@ -97,6 +97,15 @@ public class CardFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public String toString() {
+        return type + " - " + id;
+    }
+
+    public void remove() {
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -110,14 +119,5 @@ public class CardFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    @Override
-    public String toString() {
-        return type + " - " + id;
-    }
-
-    public void remove() {
-        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
 }

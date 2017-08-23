@@ -73,4 +73,13 @@ public class Game {
     public String turn() {
         return choices.currentPlayer().toString();
     }
+
+    public ArrayList<String> getActivePlayers() {
+        ArrayList<Player> players = table.getPlayers();
+        ArrayList<String> playerNames = new ArrayList<>();
+        for (Player player : players)
+            playerNames.add(player.toString());
+
+        return playerNames;
+    }
 }

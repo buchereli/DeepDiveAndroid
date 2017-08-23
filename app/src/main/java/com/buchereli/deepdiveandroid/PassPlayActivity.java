@@ -116,9 +116,15 @@ public class PassPlayActivity extends FragmentActivity {
     }
 
     public void updatePlayerTab() {
-        for (PlayerTab playerTab : playerTabs.values())
-            playerTab.removeBorder();
+        String turn = game.turn();
+        ArrayList<String> activePlayers = game.getActivePlayers();
 
-        playerTabs.get(game.turn()).addBorder();
+        for (PlayerTab playerTab : playerTabs.values())
+            if (turn.equals(playerTab.getName()))
+                playerTab.setOverlay(PlayerTab.OverlayState.BORDER);
+            else if (activePlayers.contains(playerTab.getName()))
+                playerTab.setOverlay(PlayerTab.OverlayState.NONE);
+            else
+                playerTab.setOverlay(PlayerTab.OverlayState.GREY);
     }
 }

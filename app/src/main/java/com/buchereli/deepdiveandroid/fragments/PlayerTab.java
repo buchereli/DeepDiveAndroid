@@ -25,7 +25,8 @@ public class PlayerTab extends Fragment {
 
     private String playerName;
 
-    private View tab;
+    private OverlayState overlayState;
+    private View overlay;
     private OnFragmentInteractionListener mListener;
 
     public PlayerTab() {
@@ -55,6 +56,10 @@ public class PlayerTab extends Fragment {
         }
     }
 
+    public String getName() {
+        return playerName;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,7 +69,8 @@ public class PlayerTab extends Fragment {
         TextView name = (TextView) v.findViewById(R.id.playerName);
         name.setText(playerName);
 
-        tab = v.findViewById(R.id.layout);
+        overlay = v.findViewById(R.id.overlay);
+        overlayState = OverlayState.NONE;
         return v;
     }
 
@@ -86,12 +92,21 @@ public class PlayerTab extends Fragment {
 //        }
     }
 
-    public void removeBorder() {
-        tab.setBackgroundColor(Color.WHITE);
-    }
-
-    public void addBorder() {
-        tab.setBackgroundResource(R.drawable.playertab_border);
+    public void setOverlay(OverlayState overlayState) {
+        if (this.overlayState != overlayState) {
+            switch (overlayState) {
+                case NONE:
+                    overlay.setBackgroundColor(Color.TRANSPARENT);
+                    break;
+                case GREY:
+                    overlay.setBackgroundResource(R.color.transparentGray);
+                    break;
+                case BORDER:
+                    overlay.setBackgroundResource(R.drawable.playertab_border);
+                    break;
+            }
+            this.overlayState = overlayState;
+        }
     }
 
     @Override
@@ -99,6 +114,8 @@ public class PlayerTab extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    public enum OverlayState {NONE, GREY, BORDER}
 
     /**
      * This interface must be implemented by activities that contain this
