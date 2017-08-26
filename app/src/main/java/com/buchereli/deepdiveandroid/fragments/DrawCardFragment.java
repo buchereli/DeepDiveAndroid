@@ -7,47 +7,39 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.buchereli.deepdiveandroid.AssetManager;
+import com.buchereli.deepdiveandroid.PassPlayActivity;
 import com.buchereli.deepdiveandroid.R;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CardFragment.OnFragmentInteractionListener} interface
+ * {@link DrawCardFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CardFragment#newInstance} factory method to
+ * Use the {@link DrawCardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CardFragment extends Fragment {
-    private static final String CARD_TYPE = "type";
-    private static final String CARD_ID = "id";
-
-    private String type;
-    private String id;
-
+public class DrawCardFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
+    private boolean cardDrawn;
+    private TextView text;
+    private TextView buttonText;
 
-    public CardFragment() {
+    public DrawCardFragment() {
         // Required empty public constructor
+        cardDrawn = false;
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param type The type of card
-     * @param id   The id for that type of card
-     * @return A new instance of fragment CardFragment.
+     * @return A new instance of fragment DrawCardFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static CardFragment newInstance(String type, String id) {
-        CardFragment fragment = new CardFragment();
+    public static DrawCardFragment newInstance() {
+        DrawCardFragment fragment = new DrawCardFragment();
         Bundle args = new Bundle();
-        args.putString(CARD_TYPE, type);
-        args.putString(CARD_ID, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,31 +47,15 @@ public class CardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            type = getArguments().getString(CARD_TYPE);
-            id = getArguments().getString(CARD_ID);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_card, container, false);
-        View cardBackground = v.findViewById(R.id.cardBackground);
-        ImageView icon = (ImageView) v.findViewById(R.id.icon);
-        if (type.equals("GEM")) {
-            TextView count = (TextView) v.findViewById(R.id.countTop);
-            count.setText(id);
-            count = (TextView) v.findViewById(R.id.countBottom);
-            count.setText(id);
-            cardBackground.setBackgroundResource(R.drawable.radial_gradient_artifact);
-            icon.setImageBitmap(AssetManager.get(R.drawable.coin));
-        } else if (type.equals("HAZARD")) {
-            cardBackground.setBackgroundResource(R.drawable.radial_gradient_hazard);
-        } else {
-            cardBackground.setBackgroundResource(R.drawable.radial_gradient_artifact);
-        }
+        View v = inflater.inflate(R.layout.fragment_draw_card, container, false);
+        text = (TextView) v.findViewById(R.id.textView);
+        buttonText = (TextView) v.findViewById(R.id.drawCardButton);
         return v;
     }
 
@@ -107,9 +83,19 @@ public class CardFragment extends Fragment {
         mListener = null;
     }
 
-    @Override
-    public String toString() {
-        return type + " - " + id;
+    // Returns true if fragment is removed
+    // Otherwise returns false
+    public boolean buttonPressed(PassPlayActivity gameActivity) {
+        if (!cardDrawn) {
+            // TODO remove TextView
+            text.setText("");
+            buttonText.setText("CONTINUE");
+            cardDrawn = true;
+            gameActivity.addFragment(R.id.drawCard_cardFragment, CardFragment.newInstance("GEM", "2"), "CARD FRAGMENT");
+            return false;
+        }
+        remove();
+        return true;
     }
 
     public void remove() {

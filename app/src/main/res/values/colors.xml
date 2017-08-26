@@ -5,4 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="transparentGray">#588c8c8c</color>
     <color name="brown">#976930</color>
+
+    <color name="hazardRed">#EB4336</color>
+    <color name="hazardDarkRed">#B71E29</color>
+    <color name="artifactGreen">#52AE85</color>
+    <color name="artifactBlue">#18A9A1</color>
 </resources>

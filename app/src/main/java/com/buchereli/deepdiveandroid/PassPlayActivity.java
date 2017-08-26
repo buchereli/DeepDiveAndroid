@@ -1,10 +1,12 @@
 package com.buchereli.deepdiveandroid;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.buchereli.deepdiveandroid.fragments.CardFragment;
+import com.buchereli.deepdiveandroid.fragments.DrawCardFragment;
 import com.buchereli.deepdiveandroid.fragments.PlayerTab;
 import com.buchereli.deepdiveandroid.fragments.TurnPopup;
 import com.buchereli.deepdiveandroid.util.Card;
@@ -20,12 +22,17 @@ public class PassPlayActivity extends FragmentActivity {
     private final HashMap<String, PlayerTab> playerTabs = new HashMap<>();
     private Game game;
     private TurnPopup turnPopup;
+    private DrawCardFragment drawCardFragment;
     private ArrayList<CardFragment> table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passplay);
+
+        ArrayList<Integer> ids = new ArrayList<>();
+        ids.add(R.drawable.coin);
+        AssetManager.load(this, ids);
 
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Eli"));
@@ -40,56 +47,68 @@ public class PassPlayActivity extends FragmentActivity {
             String player = players.get(i).toString();
             PlayerTab playerTab = PlayerTab.newInstance(player);
             playerTabs.put(player, playerTab);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.players,
-                            playerTab, "PLAYER TAB FRAGMENT " + i)
-                    .disallowAddToBackStack()
-                    .commit();
+            addFragment(R.id.players,
+                    playerTab, "PLAYER TAB FRAGMENT " + i);
         }
+
+        displayCardPopup();
     }
 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.stayButton:
                 game.stay();
-                choiceUpdate();
+                clearPlayerTab();
+                checkCards();
                 break;
             case R.id.leaveButton:
                 game.leave();
-                choiceUpdate();
+                clearPlayerTab();
+                checkCards();
                 break;
             case R.id.continueButton:
                 turnPopup.remove();
+                updatePlayerTab();
+                break;
+            case R.id.drawCardButton:
+                if (drawCardFragment.buttonPressed(this)) {
+                    ArrayList<Card> cards = new ArrayList<>();
+                    cards.addAll(game.table());
+                    Collections.reverse(cards);
+                    updateTable(cards);
+                    displayTurnPopup();
+                }
                 break;
         }
-    }
-
-    public void choiceUpdate() {
-        displayTurnPopup();
-        updatePlayerTab();
-        checkCards();
     }
 
     public void checkCards() {
         ArrayList<Card> cards = new ArrayList<>();
         cards.addAll(game.table());
         Collections.reverse(cards);
-        if (!tableMatch(cards)) {
-            for (CardFragment card : table)
-                card.remove();
-            table = new ArrayList<>();
 
-            for (Card card : cards) {
-                CardFragment cardFragment = CardFragment.newInstance(card.type().toString(), card.id());
-                table.add(cardFragment);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.table,
-                                cardFragment, "CARD FRAGMENT")
-                        .disallowAddToBackStack()
-                        .commit();
-            }
+        if (cards.size() != table.size()) {
+            clearPlayerTab();
+            displayCardPopup();
+            return;
+        }
+
+        if (!tableMatch(cards)) {
+            updateTable(cards);
+        }
+
+        displayTurnPopup();
+    }
+
+    public void updateTable(ArrayList<Card> cards) {
+        for (CardFragment card : table)
+            card.remove();
+        table = new ArrayList<>();
+
+        for (Card card : cards) {
+            CardFragment cardFragment = CardFragment.newInstance(card.type().toString(), card.id());
+            table.add(cardFragment);
+            addFragment(R.id.table, cardFragment, "CARD FRAGMENT");
         }
     }
 
@@ -104,15 +123,25 @@ public class PassPlayActivity extends FragmentActivity {
         return true;
     }
 
+    private void displayCardPopup() {
+        drawCardFragment = DrawCardFragment.newInstance();
+        addFragment(android.R.id.content, drawCardFragment, "DRAW CARD FRAGMENT");
+    }
+
     public void displayTurnPopup() {
         turnPopup = TurnPopup.newInstance(game.turn());
+        addFragment(android.R.id.content, turnPopup, "TURN POPUP FRAGMENT");
+    }
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(android.R.id.content,
-                        turnPopup, "TURN POPUP FRAGMENT")
-                .disallowAddToBackStack()
-                .commit();
+    public void clearPlayerTab() {
+        ArrayList<String> activePlayers = game.getActivePlayers();
+        for (PlayerTab playerTab : playerTabs.values()) {
+            if (activePlayers.contains(playerTab.getName()))
+                playerTab.setOverlay(PlayerTab.OverlayState.NONE);
+            else
+                playerTab.setOverlay(PlayerTab.OverlayState.GREY);
+        }
+
     }
 
     public void updatePlayerTab() {
@@ -126,5 +155,13 @@ public class PassPlayActivity extends FragmentActivity {
                 playerTab.setOverlay(PlayerTab.OverlayState.NONE);
             else
                 playerTab.setOverlay(PlayerTab.OverlayState.GREY);
+    }
+
+    public void addFragment(int id, Fragment fragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(id, fragment, tag)
+                .disallowAddToBackStack()
+                .commit();
     }
 }

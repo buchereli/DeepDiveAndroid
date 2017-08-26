@@ -1,6 +1,8 @@
 package com.buchereli.deepdiveandroid.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.buchereli.deepdiveandroid.R;
@@ -68,6 +71,8 @@ public class PlayerTab extends Fragment {
 
         TextView name = (TextView) v.findViewById(R.id.playerName);
         name.setText(playerName);
+
+        ImageView icon = (ImageView) v.findViewById(R.id.icon);
 
         overlay = v.findViewById(R.id.overlay);
         overlayState = OverlayState.NONE;

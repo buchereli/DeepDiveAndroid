@@ -25,6 +25,7 @@ public class Game {
         deck.add(artifacts.draw());
         table = new Table(players);
         choices = new Choices(table);
+        update();
     }
 
     private void update() {
@@ -35,11 +36,10 @@ public class Game {
                 deck.add(artifacts.draw());
             }
 
-
             Card card = deck.draw();
             table.add(card);
 
-            choices = new Choices(table);
+            choices.reset();
 
             System.out.println();
             System.out.println(deck.size());

@@ -14,6 +14,12 @@ class Choices {
 
     Choices(Table table) {
         this.table = table;
+        this.players = new ArrayList<>();
+        this.stay = new ArrayList<>();
+        this.leaveCount = 0;
+    }
+
+    void reset() {
         this.players = table.getPlayers();
         this.stay = new ArrayList<>();
         this.leaveCount = 0;
