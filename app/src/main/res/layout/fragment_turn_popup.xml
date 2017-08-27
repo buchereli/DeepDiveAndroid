@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/transparentGray"
     android:clickable="true"
-    tools:context="com.buchereli.deepdiveandroid.fragments.TurnPopup">
+    tools:context="com.buchereli.deepdiveandroid.fragments.popups.TurnPopup">
 
     <Space
         android:layout_width="0dp"

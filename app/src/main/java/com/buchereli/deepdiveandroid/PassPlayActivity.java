@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.buchereli.deepdiveandroid.fragments.CardFragment;
-import com.buchereli.deepdiveandroid.fragments.DrawCardFragment;
 import com.buchereli.deepdiveandroid.fragments.PlayerTab;
-import com.buchereli.deepdiveandroid.fragments.TurnPopup;
+import com.buchereli.deepdiveandroid.fragments.popups.DrawCardPopup;
+import com.buchereli.deepdiveandroid.fragments.popups.TurnPopup;
 import com.buchereli.deepdiveandroid.util.Card;
 import com.buchereli.deepdiveandroid.util.Game;
 import com.buchereli.deepdiveandroid.util.Player;
@@ -22,7 +22,7 @@ public class PassPlayActivity extends FragmentActivity {
     private final HashMap<String, PlayerTab> playerTabs = new HashMap<>();
     private Game game;
     private TurnPopup turnPopup;
-    private DrawCardFragment drawCardFragment;
+    private DrawCardPopup drawCardFragment;
     private ArrayList<CardFragment> table;
 
     @Override
@@ -51,7 +51,7 @@ public class PassPlayActivity extends FragmentActivity {
                     playerTab, "PLAYER TAB FRAGMENT " + i);
         }
 
-        displayCardPopup();
+        checkCards();
     }
 
     public void onClick(View view) {
@@ -88,8 +88,8 @@ public class PassPlayActivity extends FragmentActivity {
         Collections.reverse(cards);
 
         if (cards.size() != table.size()) {
-            clearPlayerTab();
-            displayCardPopup();
+            Card card = cards.get(0);
+            displayCardPopup(card.type().toString(), card.id());
             return;
         }
 
@@ -123,8 +123,8 @@ public class PassPlayActivity extends FragmentActivity {
         return true;
     }
 
-    private void displayCardPopup() {
-        drawCardFragment = DrawCardFragment.newInstance();
+    private void displayCardPopup(String type, String id) {
+        drawCardFragment = DrawCardPopup.newInstance(type, id);
         addFragment(android.R.id.content, drawCardFragment, "DRAW CARD FRAGMENT");
     }
 

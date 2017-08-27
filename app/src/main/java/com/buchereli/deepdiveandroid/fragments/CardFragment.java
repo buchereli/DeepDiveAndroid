@@ -35,9 +35,6 @@ public class CardFragment extends Fragment {
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
      * @param type The type of card
      * @param id   The id for that type of card
      * @return A new instance of fragment CardFragment.
