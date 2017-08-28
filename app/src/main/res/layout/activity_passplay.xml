@@ -25,13 +25,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/water_gradient"
         android:layout_above="@+id/imageView2"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:background="@drawable/water_gradient">
 
         <LinearLayout
             android:id="@+id/players"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="0.50"
-            android:background="@android:color/holo_orange_dark"
+            android:background="@drawable/button"
             android:onClick="onClick"
             android:text="@string/stay"
             android:textColor="@android:color/white"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="0.50"
-            android:background="@android:color/holo_orange_dark"
+            android:background="@drawable/button"
             android:onClick="onClick"
             android:text="@string/leave"
             android:textColor="@android:color/white"
