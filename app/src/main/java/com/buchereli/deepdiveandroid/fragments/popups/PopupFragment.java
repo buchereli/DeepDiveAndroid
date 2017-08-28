@@ -16,10 +16,18 @@ import com.buchereli.deepdiveandroid.PassPlayActivity;
 public abstract class PopupFragment extends Fragment {
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onCreate();
+    }
+
+    public abstract void onCreate();
+
+    @Override
     public abstract View onCreateView(LayoutInflater inflater, ViewGroup container,
                                       Bundle savedInstanceState);
 
-    public abstract boolean buttonPressed(PassPlayActivity gameActivity);
+    public abstract void buttonPressed(PassPlayActivity gameActivity);
 
     public void remove() {
         getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();

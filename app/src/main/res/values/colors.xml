@@ -10,4 +10,7 @@
     <color name="hazardDarkRed">#B71E29</color>
     <color name="artifactGreen">#52AE85</color>
     <color name="artifactBlue">#18A9A1</color>
+
+    <color name="buttonOrange">#ff9d00</color>
+    <color name="buttonOrangeDark">#e66f00</color>
 </resources>

@@ -40,8 +40,7 @@ public class DrawCardPopup extends PopupFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate() {
         if (getArguments() != null) {
             type = getArguments().getString(CARD_TYPE);
             id = getArguments().getString(CARD_ID);
@@ -52,24 +51,26 @@ public class DrawCardPopup extends PopupFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_draw_card, container, false);
-        text = (TextView) v.findViewById(R.id.textView);
-        buttonText = (TextView) v.findViewById(R.id.drawCardButton);
+        View v = inflater.inflate(R.layout.fragment_popup, container, false);
+        text = (TextView) v.findViewById(R.id.popupFragment_textView);
+        text.setText("PLACE DEVICE IN CENTER OF PLAYERS");
+        buttonText = (TextView) v.findViewById(R.id.popupFragment_button);
+        buttonText.setText("DRAW CARD");
         return v;
     }
 
-    // Returns true if fragment is removed
-    // Otherwise returns false
-    public boolean buttonPressed(PassPlayActivity gameActivity) {
+    @Override
+    public void buttonPressed(PassPlayActivity gameActivity) {
         if (!cardDrawn) {
-            ((ViewGroup) text.getParent()).removeView(text);
+            text.setText(type);
             buttonText.setText("CONTINUE");
             cardDrawn = true;
-            gameActivity.addFragment(R.id.drawCard_cardFragment, CardFragment.newInstance(type, id),
+            gameActivity.addFragment(R.id.popupFragment_imageLayout, CardFragment.newInstance(type, id),
                     "CARD FRAGMENT");
-            return false;
+        } else {
+            gameActivity.updateTable();
+            gameActivity.displayTurnPopup();
+            remove();
         }
-        remove();
-        return true;
     }
 }

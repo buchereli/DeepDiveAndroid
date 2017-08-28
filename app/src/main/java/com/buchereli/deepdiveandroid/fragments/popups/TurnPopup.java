@@ -1,9 +1,6 @@
 package com.buchereli.deepdiveandroid.fragments.popups;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +29,7 @@ public class TurnPopup extends PopupFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate() {
         if (getArguments() != null) {
             turn = getArguments().getString(CURRENT_TURN);
         }
@@ -43,14 +39,15 @@ public class TurnPopup extends PopupFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_turn_popup, container, false);
-        TextView playerName = (TextView) v.findViewById(R.id.playerName);
-        playerName.setText(turn);
+        View v = inflater.inflate(R.layout.fragment_popup, container, false);
+        TextView playerName = (TextView) v.findViewById(R.id.popupFragment_textView);
+        playerName.setText("PASS THE DEVICE TO " + turn.toUpperCase());
         return v;
     }
 
     @Override
-    public boolean buttonPressed(PassPlayActivity gameActivity) {
-        return false;
+    public void buttonPressed(PassPlayActivity gameActivity) {
+        gameActivity.updatePlayerTab();
+        remove();
     }
 }

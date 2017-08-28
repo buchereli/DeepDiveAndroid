@@ -8,6 +8,7 @@ import android.view.View;
 import com.buchereli.deepdiveandroid.fragments.CardFragment;
 import com.buchereli.deepdiveandroid.fragments.PlayerTab;
 import com.buchereli.deepdiveandroid.fragments.popups.DrawCardPopup;
+import com.buchereli.deepdiveandroid.fragments.popups.PopupFragment;
 import com.buchereli.deepdiveandroid.fragments.popups.TurnPopup;
 import com.buchereli.deepdiveandroid.util.Card;
 import com.buchereli.deepdiveandroid.util.Game;
@@ -21,8 +22,7 @@ public class PassPlayActivity extends FragmentActivity {
 
     private final HashMap<String, PlayerTab> playerTabs = new HashMap<>();
     private Game game;
-    private TurnPopup turnPopup;
-    private DrawCardPopup drawCardFragment;
+    private PopupFragment popup;
     private ArrayList<CardFragment> table;
 
     @Override
@@ -66,18 +66,8 @@ public class PassPlayActivity extends FragmentActivity {
                 clearPlayerTab();
                 checkCards();
                 break;
-            case R.id.continueButton:
-                turnPopup.remove();
-                updatePlayerTab();
-                break;
-            case R.id.drawCardButton:
-                if (drawCardFragment.buttonPressed(this)) {
-                    ArrayList<Card> cards = new ArrayList<>();
-                    cards.addAll(game.table());
-                    Collections.reverse(cards);
-                    updateTable(cards);
-                    displayTurnPopup();
-                }
+            case R.id.popupFragment_button:
+                popup.buttonPressed(this);
                 break;
         }
     }
@@ -94,13 +84,17 @@ public class PassPlayActivity extends FragmentActivity {
         }
 
         if (!tableMatch(cards)) {
-            updateTable(cards);
+            updateTable();
         }
 
         displayTurnPopup();
     }
 
-    public void updateTable(ArrayList<Card> cards) {
+    public void updateTable() {
+        ArrayList<Card> cards = new ArrayList<>();
+        cards.addAll(game.table());
+        Collections.reverse(cards);
+
         for (CardFragment card : table)
             card.remove();
         table = new ArrayList<>();
@@ -124,13 +118,13 @@ public class PassPlayActivity extends FragmentActivity {
     }
 
     private void displayCardPopup(String type, String id) {
-        drawCardFragment = DrawCardPopup.newInstance(type, id);
-        addFragment(android.R.id.content, drawCardFragment, "DRAW CARD FRAGMENT");
+        popup = DrawCardPopup.newInstance(type, id);
+        addFragment(android.R.id.content, popup, "DRAW CARD FRAGMENT");
     }
 
     public void displayTurnPopup() {
-        turnPopup = TurnPopup.newInstance(game.turn());
-        addFragment(android.R.id.content, turnPopup, "TURN POPUP FRAGMENT");
+        popup = TurnPopup.newInstance(game.turn());
+        addFragment(android.R.id.content, popup, "TURN POPUP FRAGMENT");
     }
 
     public void clearPlayerTab() {
