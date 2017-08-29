@@ -100,7 +100,7 @@ public class PassPlayActivity extends FragmentActivity {
         table = new ArrayList<>();
 
         for (Card card : cards) {
-            CardFragment cardFragment = CardFragment.newInstance(card.type().toString(), card.id());
+            CardFragment cardFragment = CardFragment.newInstance(card.type().toString(), card.id(), card.x());
             table.add(cardFragment);
             addFragment(R.id.table, cardFragment, "CARD FRAGMENT");
         }

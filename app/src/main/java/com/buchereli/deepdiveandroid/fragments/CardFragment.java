@@ -24,9 +24,11 @@ import com.buchereli.deepdiveandroid.R;
 public class CardFragment extends Fragment {
     private static final String CARD_TYPE = "type";
     private static final String CARD_ID = "id";
+    private static final String CARD_X = "x";
 
     private String type;
     private String id;
+    private boolean x;
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,11 +42,12 @@ public class CardFragment extends Fragment {
      * @return A new instance of fragment CardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CardFragment newInstance(String type, String id) {
+    public static CardFragment newInstance(String type, String id, boolean x) {
         CardFragment fragment = new CardFragment();
         Bundle args = new Bundle();
         args.putString(CARD_TYPE, type);
         args.putString(CARD_ID, id);
+        args.putBoolean(CARD_X, x);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,6 +58,7 @@ public class CardFragment extends Fragment {
         if (getArguments() != null) {
             type = getArguments().getString(CARD_TYPE);
             id = getArguments().getString(CARD_ID);
+            x = getArguments().getBoolean(CARD_X);
         }
     }
 
@@ -63,19 +67,29 @@ public class CardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_card, container, false);
+
+        if(!x){
+            View xView = v.findViewById(R.id.cardFragment_x);
+            ((ViewGroup) xView.getParent()).removeView(xView);
+        }
+
         View cardBackground = v.findViewById(R.id.cardBackground);
         ImageView icon = (ImageView) v.findViewById(R.id.icon);
-        if (type.equals("GEM")) {
-            TextView count = (TextView) v.findViewById(R.id.countTop);
-            count.setText(id);
-            count = (TextView) v.findViewById(R.id.countBottom);
-            count.setText(id);
-            cardBackground.setBackgroundResource(R.drawable.radial_gradient_artifact);
-            icon.setImageBitmap(AssetManager.get(R.drawable.coin));
-        } else if (type.equals("HAZARD")) {
-            cardBackground.setBackgroundResource(R.drawable.radial_gradient_hazard);
-        } else {
-            cardBackground.setBackgroundResource(R.drawable.radial_gradient_artifact);
+        switch (type) {
+            case "GEM":
+                TextView count = (TextView) v.findViewById(R.id.countTop);
+                count.setText(id);
+                count = (TextView) v.findViewById(R.id.countBottom);
+                count.setText(id);
+                cardBackground.setBackgroundResource(R.drawable.radial_gradient_artifact);
+                icon.setImageBitmap(AssetManager.get(R.drawable.coin));
+                break;
+            case "HAZARD":
+                cardBackground.setBackgroundResource(R.drawable.radial_gradient_hazard);
+                break;
+            default:
+                cardBackground.setBackgroundResource(R.drawable.radial_gradient_artifact);
+                break;
         }
         return v;
     }

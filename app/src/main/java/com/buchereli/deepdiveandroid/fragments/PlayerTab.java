@@ -117,7 +117,6 @@ public class PlayerTab extends Fragment {
     }
 
     public void updateActiveCoins(int activeCoins) {
-        System.out.println("SET TEXT: " + activeCoins);
         this.activeCoins.setText("" + activeCoins);
     }
 

@@ -48,6 +48,11 @@
                 android:contentDescription="@string/card_icon"
                 android:src="@drawable/coin" />
 
+            <com.buchereli.deepdiveandroid.views.XView
+                android:id="@+id/cardFragment_x"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </RelativeLayout>
 
         <View

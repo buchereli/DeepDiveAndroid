@@ -65,7 +65,7 @@ public class DrawCardPopup extends PopupFragment {
             text.setText(type);
             buttonText.setText("CONTINUE");
             cardDrawn = true;
-            gameActivity.addFragment(R.id.popupFragment_imageLayout, CardFragment.newInstance(type, id),
+            gameActivity.addFragment(R.id.popupFragment_imageLayout, CardFragment.newInstance(type, id, false),
                     "CARD FRAGMENT");
         } else {
             gameActivity.updateTable();

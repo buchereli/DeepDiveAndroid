@@ -8,6 +8,7 @@ public class Card {
 
     private CardType type;
     private String id;
+    private boolean x;
 
     Card(String type, String id) {
         switch (type) {
@@ -26,6 +27,7 @@ public class Card {
         }
 
         this.id = id;
+        this.x = false;
     }
 
     public CardType type() {
@@ -42,5 +44,14 @@ public class Card {
     }
 
     public enum CardType {GEM, HAZARD, ARTIFACT}
+
+    public boolean x() {
+        return x;
+    }
+
+    public Card setX(boolean x) {
+        this.x = x;
+        return this;
+    }
 
 }

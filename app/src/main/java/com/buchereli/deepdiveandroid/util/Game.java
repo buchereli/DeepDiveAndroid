@@ -45,7 +45,7 @@ public class Game {
 //            System.out.println();
 //            System.out.println(deck.size());
 //            System.out.println("ROUND: " + round);
-//            System.out.println("DRAW: " + card);
+            System.out.println("DRAW: " + card);
 //            System.out.println(table);
 //            for (Player player : players)
 //                System.out.println(player + "(" + player.gems() + ")");
@@ -84,7 +84,6 @@ public class Game {
     }
 
     public int getActiveGems(String player) {
-        System.out.println(player);
         return players.get(player).activeGems();
     }
 }

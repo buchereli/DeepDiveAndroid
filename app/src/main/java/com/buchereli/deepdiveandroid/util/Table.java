@@ -1,7 +1,6 @@
 package com.buchereli.deepdiveandroid.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -9,12 +8,14 @@ import java.util.LinkedHashMap;
  */
 class Table {
 
+    private ArrayList<Card> removedCards;
     private ArrayList<Card> cards;
     private LinkedHashMap<String, Player> players;
     private int tableGems;
     private boolean activeRound;
 
     Table(LinkedHashMap<String, Player> players) {
+        removedCards = new ArrayList<>();
         init(players);
     }
 
@@ -62,6 +63,8 @@ class Table {
 
         if (activeRound)
             cards.add(addCard);
+        else
+            removedCards.add(addCard.setX(true));
     }
 
     ArrayList<Player> getPlayers() {
@@ -102,6 +105,9 @@ class Table {
     }
 
     ArrayList<Card> getCards() {
-        return cards;
+        ArrayList<Card> table = new ArrayList<>();
+        table.addAll(removedCards);
+        table.addAll(cards);
+        return table;
     }
 }
