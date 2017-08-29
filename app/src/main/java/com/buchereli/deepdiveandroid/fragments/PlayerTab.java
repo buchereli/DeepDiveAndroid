@@ -1,8 +1,6 @@
 package com.buchereli.deepdiveandroid.fragments;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,6 +28,7 @@ public class PlayerTab extends Fragment {
 
     private OverlayState overlayState;
     private View overlay;
+    private TextView activeCoins, coins;
     private OnFragmentInteractionListener mListener;
 
     public PlayerTab() {
@@ -69,10 +68,13 @@ public class PlayerTab extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_player_tab, container, false);
 
-        TextView name = (TextView) v.findViewById(R.id.playerName);
+        TextView name = (TextView) v.findViewById(R.id.playerTab_playerName);
         name.setText(playerName);
 
         ImageView icon = (ImageView) v.findViewById(R.id.icon);
+
+        activeCoins = (TextView) v.findViewById(R.id.playerTab_activeCoins);
+        coins = (TextView) v.findViewById(R.id.playerTab_coins);
 
         overlay = v.findViewById(R.id.overlay);
         overlayState = OverlayState.NONE;
@@ -112,6 +114,18 @@ public class PlayerTab extends Fragment {
             }
             this.overlayState = overlayState;
         }
+    }
+
+    public void updateActiveCoins(int activeCoins) {
+        System.out.println("SET TEXT: " + activeCoins);
+        this.activeCoins.setText("" + activeCoins);
+    }
+
+    public void updateCoins(int coins) {
+        if (coins == -1)
+            this.coins.setText("?");
+        else
+            this.coins.setText("" + coins);
     }
 
     @Override

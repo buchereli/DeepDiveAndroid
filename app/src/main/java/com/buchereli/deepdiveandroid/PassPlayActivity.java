@@ -17,6 +17,7 @@ import com.buchereli.deepdiveandroid.util.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class PassPlayActivity extends FragmentActivity {
 
@@ -34,21 +35,20 @@ public class PassPlayActivity extends FragmentActivity {
         ids.add(R.drawable.coin);
         AssetManager.load(this, ids);
 
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player("Eli"));
-        players.add(new Player("Sam"));
-        players.add(new Player("Tom"));
-        players.add(new Player("Kevin"));
+        LinkedHashMap<String, Player> players = new LinkedHashMap<>();
+        players.put("Eli", new Player("Eli"));
+        players.put("Sam", new Player("Sam"));
+        players.put("Tom", new Player("Tom"));
+        players.put("Kevin", new Player("Kevin"));
 
         game = new Game(getAssets(), players);
         table = new ArrayList<>();
 
-        for (int i = 0; i < players.size(); i++) {
-            String player = players.get(i).toString();
-            PlayerTab playerTab = PlayerTab.newInstance(player);
-            playerTabs.put(player, playerTab);
+        for (Player player : players.values()) {
+            PlayerTab playerTab = PlayerTab.newInstance(player.toString());
+            playerTabs.put(player.toString(), playerTab);
             addFragment(R.id.players,
-                    playerTab, "PLAYER TAB FRAGMENT " + i);
+                    playerTab, "PLAYER TAB FRAGMENT " + player.toString());
         }
 
         checkCards();
@@ -130,6 +130,7 @@ public class PassPlayActivity extends FragmentActivity {
     public void clearPlayerTab() {
         ArrayList<String> activePlayers = game.getActivePlayers();
         for (PlayerTab playerTab : playerTabs.values()) {
+            playerTab.updateCoins(-1);
             if (activePlayers.contains(playerTab.getName()))
                 playerTab.setOverlay(PlayerTab.OverlayState.NONE);
             else
@@ -142,13 +143,17 @@ public class PassPlayActivity extends FragmentActivity {
         String turn = game.turn();
         ArrayList<String> activePlayers = game.getActivePlayers();
 
-        for (PlayerTab playerTab : playerTabs.values())
-            if (turn.equals(playerTab.getName()))
+        for (PlayerTab playerTab : playerTabs.values()) {
+            if (turn.equals(playerTab.getName())) {
                 playerTab.setOverlay(PlayerTab.OverlayState.BORDER);
-            else if (activePlayers.contains(playerTab.getName()))
+                playerTab.updateCoins(game.getGems(playerTab.getName()));
+            } else if (activePlayers.contains(playerTab.getName()))
                 playerTab.setOverlay(PlayerTab.OverlayState.NONE);
             else
                 playerTab.setOverlay(PlayerTab.OverlayState.GREY);
+
+            playerTab.updateActiveCoins(game.getActiveGems(playerTab.getName()));
+        }
     }
 
     public void addFragment(int id, Fragment fragment, String tag) {

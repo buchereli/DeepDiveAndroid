@@ -7,41 +7,40 @@ import java.util.ArrayList;
  */
 class Choices {
 
+    private int currentPlayer;
     private ArrayList<Player> players;
-    private ArrayList<Boolean> stay;
-    private int leaveCount;
+    private ArrayList<String> leave;
     private Table table;
 
     Choices(Table table) {
         this.table = table;
         this.players = new ArrayList<>();
-        this.stay = new ArrayList<>();
-        this.leaveCount = 0;
+        this.leave = new ArrayList<>();
+        this.currentPlayer = 0;
     }
 
     void reset() {
         this.players = table.getPlayers();
-        this.stay = new ArrayList<>();
-        this.leaveCount = 0;
+        this.leave = new ArrayList<>();
+        this.currentPlayer = 0;
     }
 
     Player currentPlayer() {
-        return players.get(stay.size());
+        return players.get(currentPlayer);
     }
 
     void stay(Boolean choice) {
-        stay.add(choice);
         if (!choice)
-            leaveCount++;
+            leave.add(players.get(currentPlayer).toString());
+        currentPlayer++;
     }
 
     boolean complete() {
-        if (stay.size() == players.size()) {
-            table.update(stay, leaveCount);
-            return true;
-        }
+        if (currentPlayer < players.size())
+            return false;
 
-        return false;
+        table.update(leave);
+        return true;
     }
 
 }

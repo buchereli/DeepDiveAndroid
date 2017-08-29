@@ -7,24 +7,36 @@ package com.buchereli.deepdiveandroid.util;
 public class Player {
 
     private String id;
-    private int gems;
+    private int gems, activeGems;
 
     public Player(String id) {
         this.id = id;
-        gems = 0;
+        this.gems = 0;
+        this.activeGems = 0;
     }
 
-    void addGems(int count) {
-        gems += count;
+    void removeActiveGems() {
+        activeGems = 0;
+    }
+
+    void addActiveGems(int count) {
+        activeGems += count;
+    }
+
+    void addGems() {
+        gems += activeGems;
     }
 
     int gems() {
         return gems;
     }
 
+    int activeGems() {
+        return activeGems;
+    }
+
     @Override
     public String toString() {
         return id;
     }
-
 }

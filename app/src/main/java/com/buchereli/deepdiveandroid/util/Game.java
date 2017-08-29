@@ -3,6 +3,7 @@ package com.buchereli.deepdiveandroid.util;
 import android.content.res.AssetManager;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * Created by buche on 8/15/2017.
@@ -10,14 +11,14 @@ import java.util.ArrayList;
 
 public class Game {
 
-    private ArrayList<Player> players;
+    private LinkedHashMap<String, Player> players;
     private Artifacts artifacts;
     private Deck deck;
     private Table table;
     private Choices choices;
     private int round = 1;
 
-    public Game(AssetManager assets, ArrayList<Player> players) {
+    public Game(AssetManager assets, LinkedHashMap<String, Player> players) {
         this.players = players;
 
         artifacts = new Artifacts(assets);
@@ -41,14 +42,14 @@ public class Game {
 
             choices.reset();
 
-            System.out.println();
-            System.out.println(deck.size());
-            System.out.println("ROUND: " + round);
-            System.out.println("DRAW: " + card);
-            System.out.println(table);
-            for (Player player : players)
-                System.out.println(player + "(" + player.gems() + ")");
-            System.out.println();
+//            System.out.println();
+//            System.out.println(deck.size());
+//            System.out.println("ROUND: " + round);
+//            System.out.println("DRAW: " + card);
+//            System.out.println(table);
+//            for (Player player : players)
+//                System.out.println(player + "(" + player.gems() + ")");
+//            System.out.println();
         }
     }
 
@@ -75,11 +76,15 @@ public class Game {
     }
 
     public ArrayList<String> getActivePlayers() {
-        ArrayList<Player> players = table.getPlayers();
-        ArrayList<String> playerNames = new ArrayList<>();
-        for (Player player : players)
-            playerNames.add(player.toString());
+        return table.getActivePlayers();
+    }
 
-        return playerNames;
+    public int getGems(String player) {
+        return players.get(player).gems();
+    }
+
+    public int getActiveGems(String player) {
+        System.out.println(player);
+        return players.get(player).activeGems();
     }
 }

@@ -15,5 +15,6 @@
     <string name="card_icon">card icon</string>
     <string name="place_center">PLACE DEVICE IN THE CENTER OF TABLE</string>
     <string name="draw_card">DRAW CARD</string>
+    <string name="questionmark">\?</string>
 
 </resources>
