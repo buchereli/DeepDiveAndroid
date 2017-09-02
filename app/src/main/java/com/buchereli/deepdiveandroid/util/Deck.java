@@ -20,7 +20,7 @@ class Deck {
         try {
             deck = new ArrayList<Card>();
             // TYPE, ID, COUNT
-            CSVReader reader = new CSVReader(new InputStreamReader(assets.open("deck.csv")));
+            CSVReader reader = new CSVReader(new InputStreamReader(assets.open("hazards.csv")));
             for (String[] line : reader.readAll()) {
                 for (int i = 0; i < Integer.parseInt(line[2]); i++) {
                     deck.add(new Card(line[0], line[1]));

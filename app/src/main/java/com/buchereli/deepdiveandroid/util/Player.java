@@ -8,11 +8,13 @@ public class Player {
 
     private String id;
     private int gems, activeGems;
+    private boolean active;
 
     public Player(String id) {
         this.id = id;
         this.gems = 0;
         this.activeGems = 0;
+        this.active = true;
     }
 
     void removeActiveGems() {
@@ -27,12 +29,20 @@ public class Player {
         gems += activeGems;
     }
 
-    int gems() {
+    public int getGems() {
         return gems;
     }
 
-    int activeGems() {
+    public int getActiveGems() {
         return activeGems;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

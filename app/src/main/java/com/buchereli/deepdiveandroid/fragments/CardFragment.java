@@ -68,16 +68,17 @@ public class CardFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_card, container, false);
 
-        if(!x){
+        if (!x) {
             View xView = v.findViewById(R.id.cardFragment_x);
             ((ViewGroup) xView.getParent()).removeView(xView);
         }
 
         View cardBackground = v.findViewById(R.id.cardBackground);
         ImageView icon = (ImageView) v.findViewById(R.id.icon);
+        TextView count;
         switch (type) {
             case "GEM":
-                TextView count = (TextView) v.findViewById(R.id.countTop);
+                count = (TextView) v.findViewById(R.id.countTop);
                 count.setText(id);
                 count = (TextView) v.findViewById(R.id.countBottom);
                 count.setText(id);
@@ -85,6 +86,10 @@ public class CardFragment extends Fragment {
                 icon.setImageBitmap(AssetManager.get(R.drawable.coin));
                 break;
             case "HAZARD":
+                count = (TextView) v.findViewById(R.id.countTop);
+                count.setText(id);
+                count = (TextView) v.findViewById(R.id.countBottom);
+                count.setText(id);
                 cardBackground.setBackgroundResource(R.drawable.radial_gradient_hazard);
                 break;
             default:

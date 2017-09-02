@@ -3,54 +3,80 @@ package com.buchereli.deepdiveandroid.util;
 import android.content.res.AssetManager;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 /**
  * Created by buche on 8/15/2017.
  */
 
+// This class manages the game
 public class Game {
 
-    private LinkedHashMap<String, Player> players;
+    private ArrayList<Player> players;
     private Artifacts artifacts;
     private Deck deck;
     private Table table;
     private Choices choices;
     private int round = 1;
+    private String state;
 
-    public Game(AssetManager assets, LinkedHashMap<String, Player> players) {
+    public Game(AssetManager assets, ArrayList<Player> players) {
+        // Save all players in this game
         this.players = players;
 
-        artifacts = new Artifacts(assets);
-        deck = new Deck(assets);
-        deck.add(artifacts.draw());
-        table = new Table(players);
-        choices = new Choices(table);
-        update();
+        // Create the deck and artifacts from CSV files in assets
+        this.artifacts = new Artifacts(assets);
+        this.deck = new Deck(assets);
+
+        // Start by adding 1 artifact to the deck
+        this.deck.add(artifacts.draw());
+
+        // Initialize the table
+        this.table = new Table(players);
+
+        // Track the choices as players make them
+        this.choices = new Choices(table);
+
+        // Track the state the game is in
+        this.state = "NEW ROUND";
     }
 
+    // If every player has made a choice draw a new card
     private void update() {
-        while (choices.complete()) {
-            if (!table.activeRound()) {
-                table.reset(deck, players);
-                round++;
-                deck.add(artifacts.draw());
-            }
-
+        // If every player has made a their choice then draw a new card
+        while (choices.complete() && table.activeRound()) {
+            // Draw card
             Card card = deck.draw();
             table.add(card);
 
-            choices.reset();
+            // If the round is over then update state
+            if (!table.activeRound())
+                state = "ROUND OVER";
 
-//            System.out.println();
-//            System.out.println(deck.size());
-//            System.out.println("ROUND: " + round);
-            System.out.println("DRAW: " + card);
-//            System.out.println(table);
-//            for (Player player : players)
-//                System.out.println(player + "(" + player.gems() + ")");
-//            System.out.println();
+            // Reset choices
+            choices.reset();
         }
+    }
+
+    // Start a new round
+    public void newRound() {
+        // Reset the table and deck
+        table.reset(deck, players);
+
+        // Update round
+        round++;
+
+        // Add a new artifact to the deck
+        deck.add(artifacts.draw());
+
+        // Draw card
+        Card card = deck.draw();
+        table.add(card);
+
+        // Update state
+        state = "CHOICES";
+
+        // Reset choices
+        choices.reset();
     }
 
     public void stay() {
@@ -63,27 +89,11 @@ public class Game {
         update();
     }
 
-    public ArrayList<Card> table() {
-        return table.getCards();
+    public GameState getGameState() {
+        return new GameState(state, table.getCards(), choices.currentPlayer(), players);
     }
 
-    public String state() {
-        return "It is currently " + choices.currentPlayer() + " turn";
-    }
-
-    public String turn() {
-        return choices.currentPlayer().toString();
-    }
-
-    public ArrayList<String> getActivePlayers() {
-        return table.getActivePlayers();
-    }
-
-    public int getGems(String player) {
-        return players.get(player).gems();
-    }
-
-    public int getActiveGems(String player) {
-        return players.get(player).activeGems();
+    public void nextRound() {
+        state = "NEW ROUND";
     }
 }

@@ -14,19 +14,19 @@ class Choices {
 
     Choices(Table table) {
         this.table = table;
-        this.players = new ArrayList<>();
-        this.leave = new ArrayList<>();
-        this.currentPlayer = 0;
+        reset();
     }
 
     void reset() {
         this.players = table.getPlayers();
+        for (Player player : this.players)
+            player.setActive(true);
         this.leave = new ArrayList<>();
         this.currentPlayer = 0;
     }
 
-    Player currentPlayer() {
-        return players.get(currentPlayer);
+    String currentPlayer() {
+        return players.isEmpty() ? null : players.get(currentPlayer).toString();
     }
 
     void stay(Boolean choice) {

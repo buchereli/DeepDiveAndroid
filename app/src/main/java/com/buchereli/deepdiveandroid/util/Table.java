@@ -1,6 +1,7 @@
 package com.buchereli.deepdiveandroid.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 
 /**
@@ -14,20 +15,24 @@ class Table {
     private int tableGems;
     private boolean activeRound;
 
-    Table(LinkedHashMap<String, Player> players) {
+    Table(ArrayList<Player> players) {
         removedCards = new ArrayList<>();
         init(players);
     }
 
-    void reset(Deck deck, LinkedHashMap<String, Player> players) {
-        deck.add(cards);
+    void reset(Deck deck, ArrayList<Player> players) {
+        if (!cards.isEmpty()) {
+            Card card = cards.remove(cards.size() - 1);
+            removedCards.add(card.setX(true));
+            deck.add(cards);
+        }
         init(players);
     }
 
-    private void init(LinkedHashMap<String, Player> players) {
+    private void init(ArrayList<Player> players) {
         this.players = new LinkedHashMap<>();
-        for (String player : players.keySet())
-            this.players.put(player, players.get(player));
+        for (Player player : players)
+            this.players.put(player.toString(), player);
         cards = new ArrayList<>();
         tableGems = 0;
         activeRound = true;
@@ -40,6 +45,7 @@ class Table {
             for (String player : leave) {
                 players.get(player).addActiveGems(tableGems / leaveCount);
                 players.get(player).addGems();
+                players.get(player).setActive(false);
                 players.remove(player);
             }
 
@@ -61,10 +67,7 @@ class Table {
             }
         }
 
-        if (activeRound)
-            cards.add(addCard);
-        else
-            removedCards.add(addCard.setX(true));
+        cards.add(addCard);
     }
 
     ArrayList<Player> getPlayers() {
@@ -87,12 +90,6 @@ class Table {
         return activeRound;
     }
 
-    ArrayList<String> getActivePlayers() {
-        ArrayList<String> players = new ArrayList<>();
-        players.addAll(this.players.keySet());
-        return players;
-    }
-
     @Override
     public String toString() {
         String table = "";
@@ -108,6 +105,7 @@ class Table {
         ArrayList<Card> table = new ArrayList<>();
         table.addAll(removedCards);
         table.addAll(cards);
+        Collections.reverse(table);
         return table;
     }
 }
